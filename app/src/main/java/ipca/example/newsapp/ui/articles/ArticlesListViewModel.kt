@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ipca.example.newsapp.models.Article
+import ipca.example.newsapp.BuildConfig
 import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
@@ -24,15 +25,15 @@ class ArticlesListViewModel : ViewModel() {
     var uiState = mutableStateOf(ArticlesListState())
         private set
 
-    // ⚠️ A TUA API KEY ESTÁ EXPOSTA! Vê a nota no fim da resposta.
-    private val API_KEY = "2501a01f4d9941e0975ef80604eff3e3"
-
     fun fetchArticles(source: String) {
         uiState.value = uiState.value.copy(isLoading = true)
 
+        val apiKey = BuildConfig.API_KEY
+
         val request = Request.Builder()
-            .url("https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=${API_KEY}")
+            .url("https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=${apiKey}")
             .build()
+
         val client = OkHttpClient()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -52,7 +53,7 @@ class ArticlesListViewModel : ViewModel() {
                                 isLoading = false,
                                 error = "Unexpected code $response"
                             )
-                            return@launch // Sair do scope
+                            return@launch
                         }
 
                         val newsResult = response.body!!.string()

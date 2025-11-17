@@ -63,10 +63,10 @@ fun ArticleViewCellPreview() {
         ArticleViewCell(
             article = Article(
                 "",
-                title = "Title akjsfhaskjfas ",
+                title = "Title",
                 description = "Description",
                 url = "",
-                urlToImage = "https://... (url de imagem para teste)",
+                urlToImage = "",
                 publishedAt = ""
             )
         )

@@ -82,7 +82,6 @@ fun ArticlesListViewContent(
     }
 }
 
-// Preview não precisa de alterações
 @Preview(showBackground = true)
 @Composable
 fun ArticlesListViewPreview() {

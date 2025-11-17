@@ -33,7 +33,6 @@ fun ArticleDetailView(
             }
         },
         update = {
-            // Usar a URL descodificada
             it.loadUrl(decodedUrl)
         }
     )
