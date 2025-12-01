@@ -1,59 +1,91 @@
-# NewsApp - Leitor de Notícias (Programação de Dispositivos Móveis)
+# CryptoApp - Monitor de Criptomoedas (PDM)
 
-![Plataforma](https://img.shields.io/badge/Plataforma-Android-3DDC84.svg?style=for-the-badge&logo=android)
-![Linguagem](https://img.shields.io/badge/Feito%20com-Kotlin-0095D5.svg?style=for-the-badge&logo=kotlin)
-![Arquitetura](https://img.shields.io/badge/Arquitetura-Clean_Arch-orange.svg?style=for-the-badge)
+![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android)
+![Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin)
+![Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose)
+![Architecture](https://img.shields.io/badge/Architecture-Clean%20Arch-orange?style=for-the-badge)
 
 ## 📖 Sobre o Projeto
 
-Este projeto é uma aplicação nativa de leitura de notícias para Android, desenvolvida no âmbito da unidade curricular de **Programação de Dispositivos Móveis (PDM)**.
+A **CryptoApp** é uma aplicação nativa Android desenvolvida no âmbito da unidade curricular de **Programação de Dispositivos Móveis (PDM)**.
 
-A aplicação consome dados em tempo real da **NewsAPI.org**, permitindo ao utilizador consultar manchetes de diversas fontes internacionais. O projeto destaca-se pela implementação de **Clean Architecture**, separando rigorosamente as camadas de dados, domínio e interface, garantindo um código modular, testável e escalável.
+O objetivo da aplicação é permitir o acompanhamento em tempo real do mercado de criptomoedas. A app consome dados da **CoinPaprika API**, apresentando uma listagem das principais moedas e os seus detalhes financeiros essenciais, com uma interface moderna e otimizada para o tema escuro ("Dark Mode").
 
 ## ✨ Funcionalidades
 
-* **Múltiplas Fontes:** Acesso rápido a notícias de fontes como TechCrunch, Bloomberg, ESPN, BBC News, Wired, entre outras.
-* **Leitura de Artigos:** Integração com **WebView** para carregar o conteúdo original da notícia dentro da app.
-* **Navegação Intuitiva:**
-    * **Ecrã Inicial (Home):** Menu centralizado para escolha da fonte de notícias.
-    * **Lista de Artigos:** *Scroll* fluido com imagens de destaque e títulos.
-* **UI Dinâmica:** A barra de topo (TopBar) adapta-se automaticamente para mostrar o nome da fonte selecionada e esconde-se no ecrã principal.
-* **Carregamento de Imagens:** Processamento assíncrono e eficiente de imagens da web.
+* **Listagem em Tempo Real:** Visualização das Top 50 criptomoedas (Bitcoin, Ethereum, etc.).
+* **Indicadores Visuais:**
+    * Variação de preço a 24h com código de cores (Verde para subida, Vermelho para descida).
+    * Logótipos oficiais de cada moeda carregados dinamicamente.
+* **Detalhes de Mercado:**
+    * Preço atual em Dólares (USD).
+    * Ranking global.
+    * Capitalização de Mercado (Market Cap).
+    * Volume nas últimas 24h.
+    * Supply em circulação.
+* **UI/UX:**
+    * Interface totalmente construída em **Jetpack Compose**.
+    * **Dark Mode Forçado:** Tema azul escuro personalizado para melhor visualização e estilo "Crypto".
+    * Navegação fluída entre lista e detalhes.
 
-## 🎨 Design e UI
+## 🛠️ Stack Tecnológico
 
-A interface foi construída 100% em **Jetpack Compose**, seguindo as diretrizes modernas do Material Design:
-* **Cards Interativos:** Apresentação limpa das notícias com cantos arredondados e sombras suaves.
-* **Layout Adaptável:** Uso de `LazyColumn` para listas eficientes e `Scaffold` para estrutura da página.
-* **Navegação:** Transições fluídas entre o menu inicial, a lista e o detalhe da notícia.
+* **Linguagem:** [Kotlin](https://kotlinlang.org/)
+* **UI Toolkit:** [Jetpack Compose](https://developer.android.com/jetpack/compose) (Material Design 3)
+* **Networking:** [OkHttp](https://square.github.io/okhttp/) (Pedidos HTTP eficientes e parsing manual de JSON).
+* **Imagens:** [Coil](https://coil-kt.github.io/coil/) (Carregamento assíncrono de imagens da web).
+* **Arquitetura:** Clean Architecture (MVVM).
 
-## 🛠️ Tecnologias Utilizadas
+## 🏗️ Arquitetura (Clean Architecture)
 
-* **[Kotlin](https://kotlinlang.org/):** Linguagem de programação principal.
-* **[Jetpack Compose](https://developer.android.com/jetpack/compose):** Toolkit moderno para construção de UI nativa.
-* **[OkHttp](https://square.github.io/okhttp/):** Cliente HTTP para realizar os pedidos à API de forma eficiente.
-* **[Coil](https://coil-kt.github.io/coil/):** Biblioteca para carregamento assíncrono de imagens.
-* **Arquitetura (Clean Arch):**
-    * **Domain Layer (`GetArticlesUseCase`):** Lógica de negócio pura e modelos de dados independentes.
-    * **Data Layer (`ArticlesRepositoryImplementation`):** Gestão de pedidos à API e parsing de JSON.
-    * **UI Layer (`ArticlesListViewModel`):** Gestão de estado (StateFlow) e componentes visuais.
+O projeto segue rigorosamente os princípios de separação de responsabilidades, dividido em três camadas:
+
+1.  **Domain Layer (Domínio):**
+    * Contém as regras de negócio e modelos puros (`Coin`).
+    * Define as interfaces (`CoinRepository`) e UseCases (`GetCoinsUseCase`).
+    * *Independente de frameworks Android.*
+
+2.  **Data Layer (Dados):**
+    * Implementa o repositório (`CoinRepositoryImpl`).
+    * Gere a comunicação com a API da CoinPaprika.
+    * Faz o tratamento de dados (parsing JSON seguro para lidar com falhas de tipos numéricos).
+
+3.  **Presentation Layer (UI):**
+    * **ViewModel (`CoinsListViewModel`):** Gere o estado da UI (`CoinsListState`) e comunica com o Domínio.
+    * **Composables:** Ecrãs (`CoinsListView`, `CoinDetailView`) e componentes (`CoinViewCell`).
 
 ## 🚀 Como Executar
 
-Para compilar e executar o projeto, precisas de configurar a API Key.
+Este projeto utiliza a API pública da CoinPaprika, pelo que **não é necessário configurar chaves de API**.
 
 1.  **Pré-requisitos:**
     * Android Studio (Versão Koala ou superior recomendada).
-    * Uma chave gratuita da [NewsAPI.org](https://newsapi.org/).
+    * JDK 17 ou superior.
 
-2.  **Configurar a Chave (Segurança):**
-    * Cria um ficheiro `local.properties` na raiz do projeto (se não existir).
-    * Adiciona a seguinte linha:
-        ```properties
-        API_KEY= 
-        ```
+2.  **Instalação:**
+    ```bash
+    # 1. Clona este repositório
+    git clone [LINK_DO_TEU_REPOSITORIO]
 
-3.  **Executar:**
-    * Abre o projeto no Android Studio.
-    * Clica em "Sync Project with Gradle Files".
-    * Seleciona o emulador e clica no botão "Run".
+    # 2. Abre o projeto no Android Studio
+    ```
+
+3.  **Compilação:**
+    * Aguarda a sincronização do Gradle.
+    * No menu, seleciona **Build > Clean Project** (para garantir que não há cache antiga).
+    * Seleciona um emulador ou dispositivo físico.
+    * Clica em **Run**.
+
+## 📱 Screenshots
+
+| Lista de Moedas | Detalhe da Moeda |
+|:---:|:---:|
+| *(Coloca aqui um print da Lista)* | *(Coloca aqui um print do Detalhe)* |
+
+## 🔗 Créditos
+
+* Dados fornecidos por [CoinPaprika API](https://api.coinpaprika.com/).
+* Ícones/Logos fornecidos por CoinPaprika Static Assets.
+
+---
+**Desenvolvido por [Bernardo Martins]**
