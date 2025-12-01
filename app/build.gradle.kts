@@ -13,11 +13,11 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    namespace = "ipca.example.newsapp"
+    namespace = "ipca.example.cryptoapp"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "ipca.example.newsapp"
+        applicationId = "ipca.example.cryptoapp"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

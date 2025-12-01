@@ -1,35 +1,38 @@
-package ipca.example.newsapp.ui.articles
+package ipca.example.cryptoapp.ui.coins
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ipca.example.newsapp.dependencies.AppModule
-import ipca.example.newsapp.domain.model.Article
+import ipca.example.cryptoapp.di.AppModule
+import ipca.example.cryptoapp.domain.model.Coin
 import kotlinx.coroutines.launch
 
-data class ArticlesListState(
-    val articles: List<Article> = emptyList(),
+data class CoinsListState(
+    val coins: List<Coin> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null
 )
 
-class ArticlesListViewModel : ViewModel() {
+class CoinsListViewModel : ViewModel() {
 
-    var uiState = mutableStateOf(ArticlesListState())
+    var uiState = mutableStateOf(CoinsListState())
         private set
 
-    private val getArticlesUseCase = AppModule.getArticlesUseCase
+    private val getCoinsUseCase = AppModule.getCoinsUseCase
 
-    fun fetchArticles(source: String) {
+    init {
+        fetchCoins()
+    }
+
+    fun fetchCoins() {
         uiState.value = uiState.value.copy(isLoading = true, error = null)
 
         viewModelScope.launch {
             try {
-                val articles = getArticlesUseCase(source)
-
+                val coins = getCoinsUseCase()
                 uiState.value = uiState.value.copy(
                     isLoading = false,
-                    articles = articles
+                    coins = coins
                 )
             } catch (e: Exception) {
                 e.printStackTrace()

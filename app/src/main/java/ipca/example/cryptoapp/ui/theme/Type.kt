@@ -1,4 +1,4 @@
-package ipca.example.newsapp.ui.theme
+package ipca.example.cryptoapp.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
